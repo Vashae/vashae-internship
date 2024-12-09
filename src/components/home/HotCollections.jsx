@@ -5,6 +5,7 @@ import nftImage from "../../images/nftImage.jpg";
 
 const HotCollections = () => {
   return (
+    //does this work?
     <section id="section-collections" className="no-bottom">
       <div className="container">
         <div className="row">
