@@ -17,7 +17,6 @@ const [filter, setFilter] = useState("")
     setLoading(true)
     try {const {data} = await axios.get (`https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filter ? `?filter=${filter}`:""}`)
     setExplode(data)
-    console.log(data)
   } catch(err) {setError('Cant retrieve explore page Data')
   }
   finally {
