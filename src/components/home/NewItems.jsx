@@ -6,6 +6,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "react-loading-skeleton/dist/skeleton.css";
 import Skeleton from "react-loading-skeleton";
+import Impending from "../impending";
+
 
 const NewItems = () => {
   const [newItems, setNewItems] = useState([]);
@@ -89,23 +91,12 @@ const NewItems = () => {
   
       const interval = setInterval(() => {
         setTimeLeft(expiryDate - Date.now());
-      }, 1000);
+      }, 1000)
   
-      return () => clearInterval(interval);
+      return () => clearInterval(interval)
     }, [expiryDate, timeLeft]);
   
-    const getFormattedTime = (milliseconds) => {
-      if (milliseconds <= 0) return "";
-  
-      const totalSeconds = Math.floor(milliseconds / 1000);
-      const hours = Math.floor((totalSeconds % (3600 * 24)) / 3600);
-      const minutes = Math.floor((totalSeconds % 3600) / 60);
-      const seconds = totalSeconds % 60;
-  
-      return ` ${hours}h ${minutes}m ${seconds}s`;
-    };
-  
-    return <div>{getFormattedTime(timeLeft)}</div>;
+   
   };
   
 
@@ -152,7 +143,7 @@ const NewItems = () => {
                       
                     </div>
                     
-                    <div className="de_countdown"> <Countdown expiryDate={item.expiryDate} /></div>
+                    <div className="de_countdown"> <Impending timeLeft={item.expiryDate}/></div>
                     
 
 
