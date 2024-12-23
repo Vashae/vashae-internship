@@ -78,7 +78,7 @@ const handleChange = (e) => {
           <div className="nft__item">
             <div className="author_list_pp">
               <Link
-                to="/author"
+                to={`/author/${exploration.authorId}`}
                 data-bs-toggle="tooltip"
                 data-bs-placement="top"
               >
