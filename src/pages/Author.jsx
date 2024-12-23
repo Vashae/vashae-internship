@@ -1,55 +1,68 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import AuthorBanner from "../images/author_banner.jpg";
 import AuthorItems from "../components/author/AuthorItems";
 import { Link } from "react-router-dom";
 import AuthorImage from "../images/author_thumbnail.jpg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import "react-loading-skeleton/dist/skeleton.css";
+import Skeleton from "react-loading-skeleton";
 
-const Author = () => {
-  const { id } = useParams()
-  const [read, setRead] = useState([])
-  const [searchterm, setSearchTerm] = useState('')
-  
+const Author = ({nftCollection}) => {
+  const { id } = useParams();
+  const [read, setRead] = useState(null);
+  const [loading, setLoading] = useState(true)
 
-  useEffect(()=>{
-    async function fetchAuthor(){
-      const {data} = await axios.get (`https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`)
-      setRead(data)
-      console.log(data)
+  useEffect(() => {
+    async function fetchAuthor() {
+      try {
+        const { data } = await axios.get(
+          `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
+        );
+        console.log("Received data:", data);
+        setRead(data);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+      finally {setLoading(false)}
     }
-    fetchAuthor()
-  },[id])
+    fetchAuthor();
+  }, [id]);
+ 
+  if (!read) {
+    return <div> </div>;
+  }
+
   return (
-    
     <div id="wrapper">
       <div className="no-bottom no-top" id="content">
         <div id="top"></div>
-
         <section
           id="profile_banner"
           aria-label="section"
           className="text-light"
           data-bgimage="url(images/author_banner.jpg) top"
-          style={{ background: `url(${AuthorBanner}) top` }}
+          style={{ background: `url(${read.authorImage}) top` }}
         ></section>
-{Array.isArray(read) && read.slice(0, 6).map((red, index) => (
-        <section aria-label="section" key={index}>
+        
+        <section aria-label="section">
           <div className="container">
             <div className="row">
               <div className="col-md-12">
                 <div className="d_profile de-flex">
                   <div className="de-flex-col">
                     <div className="profile_avatar">
-                      <img src={red.authorImage} alt="" />
+                      <img src={read.authorImage} alt="" />
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
-                          {red.authorName}
-                          <span className="profile_username">{red.tag}</span>
+                          {read.authorName}
+                          <span className="profile_username">
+                            {read.tag}
+                          </span>
                           <span id="wallet" className="profile_wallet">
-                            {red.address}
+                            {read.address}
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
@@ -60,7 +73,9 @@ const Author = () => {
                   </div>
                   <div className="profile_follow de-flex">
                     <div className="de-flex-col">
-                      <div className="profile_follower"> {red.followers}</div>
+                      <div className="profile_follower">
+                        {read.followers}
+                      </div>
                       <Link to="#" className="btn-main">
                         Follow
                       </Link>
@@ -71,18 +86,14 @@ const Author = () => {
 
               <div className="col-md-12">
                 <div className="de_tab tab_simple">
-                  <AuthorItems />
+                  <AuthorItems nftCollection={read.nftCollection} />
                 </div>
               </div>
             </div>
           </div>
-        
         </section>
-         ))};
-         
       </div>
     </div>
-
   );
 };
 
