@@ -10,7 +10,7 @@ import Skeleton from "react-loading-skeleton";
 
 const Author = ({nftCollection}) => {
   const { id } = useParams();
-  const [read, setRead] = useState(null);
+  const [read, setRead] = useState([]);
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -29,9 +29,10 @@ const Author = ({nftCollection}) => {
     fetchAuthor();
   }, [id]);
  
-  if (!read) {
-    return <div> </div>;
-  }
+if (loading) return (
+ <div className="col-md-12"><Skeleton/></div> 
+
+)
 
   return (
     <div id="wrapper">
@@ -42,7 +43,7 @@ const Author = ({nftCollection}) => {
           aria-label="section"
           className="text-light"
           data-bgimage="url(images/author_banner.jpg) top"
-          style={{ background: `url(${read.authorImage}) top` }}
+          style={{ background: `url(${AuthorBanner}) top` }}
         ></section>
         
         <section aria-label="section">
