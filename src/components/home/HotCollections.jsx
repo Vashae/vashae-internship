@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import 'react-loading-skeleton/dist/skeleton.css'
-import Skeleton from "react-loading-skeleton";
+import Skeleton from "react-loading-skeleton"
 
 
 
@@ -16,7 +16,7 @@ import Skeleton from "react-loading-skeleton";
 const HotCollections = () => {
   const [nft, setNft] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState(null);
+  
 
   function SampleNextArrow(props) {
     const { className, style, onClick } = props;
@@ -47,8 +47,8 @@ const HotCollections = () => {
           `https://us-central1-nft-cloud-functions.cloudfunctions.net/hotCollections`
         );
         setNft(data);
-      } catch (err) {
-        setError("Failed to load collections. Please try again later.");
+      } catch (error) {
+        console.error('cant fetch data')(error)
       } finally {
         setIsLoading(false);
       }
@@ -95,13 +95,20 @@ const HotCollections = () => {
 
   return (
     <section id="section-collections" className="no-bottom">
+      <div data-aos="fade-in"
+              data-aos-delay='50'
+              data-aos-offset='200'
+              data-aos-duration="400"
+              data-aos-easing="ease-in-out"
+              data-aos-once='true'
+              >
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
             <div className="text-center">
+              
               <h2>Hot Collections</h2>
               <div className="small-border bg-color-2"></div>
-            </div>
           </div>
         </div>
         <Slider {...settings}>
@@ -132,7 +139,7 @@ const HotCollections = () => {
                 <div key={style.id}>
                   <div className="nft_coll">
                     <div className="nft_wrap">
-                      <Link to="/item-details">
+                      <Link to={`/item-details/ ${style.nftId}`}>
                         <img
                           src={style.nftImage}
                           className="lazy img-fluid"
@@ -160,6 +167,8 @@ const HotCollections = () => {
                 </div>
               ))}
         </Slider>
+      </div>
+      </div>
       </div>
     </section>
   );

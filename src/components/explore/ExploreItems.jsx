@@ -7,7 +7,6 @@ import Skeleton from "react-loading-skeleton";
 
 const ExploreItems = () => {
  const [explode, setExplode] = useState([])
- const [err,setError] = useState(null)
  const [loading, setLoading] = useState(true)
  const [visibleItems, setVisibleItems] = useState(8)
 const [filter, setFilter] = useState("")
@@ -17,7 +16,9 @@ const [filter, setFilter] = useState("")
     setLoading(true)
     try {const {data} = await axios.get (`https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filter ? `?filter=${filter}`:""}`)
     setExplode(data)
-  } catch(err) {setError('Cant retrieve explore page Data')
+    console.log(data)
+  } catch (error) {
+    console.error('cant fetch data')(error)
   }
   finally {
     setLoading(false)
@@ -86,7 +87,7 @@ const handleChange = (e) => {
                 <i className="fa fa-check"></i>
               </Link>
             </div>
-            <div className="de_countdown"><Impending timeLeft={exploration.expiryDate}/></div>
+            <div className="de_countdown"> <Impending timeLeft={exploration.expiryDate}/></div>
 
             <div className="nft__item_wrap">
               <div className="nft__item_extra">
@@ -106,12 +107,12 @@ const handleChange = (e) => {
                   </div>
                 </div>
               </div>
-              <Link to="/item-details">
+              <Link to={`/item-details/ ${exploration.nftId}`}>
                 <img src={exploration.nftImage} className="lazy nft__item_preview" alt="" />
               </Link>
             </div>
             <div className="nft__item_info">
-              <Link to="/item-details">
+              <Link to={`/item-details/ ${exploration.nftId}`}>
                 <h4>{exploration.title}</h4>
               </Link>
               <div className="nft__item_price">{exploration.price} ETH</div>

@@ -9,15 +9,16 @@ import Skeleton from "react-loading-skeleton";
 const TopSellers = () => {
  const [sellers, setSellers] = useState([])
  const [loading, setLoading] = useState(true)
- const [error, setError] = useState(null)
+
 
 
  useEffect(() => { async function Free (){
   try { 
     const { data } = await axios.get(`https://us-central1-nft-cloud-functions.cloudfunctions.net/topSellers`)
   setSellers(data)
+  console.log(data)
   } catch (error) {
-    setError ("Failed to load TopSellers, try again next time :)")
+    console.error('cant fetch data')(error)
   } finally {
     setLoading(false)
   }
@@ -31,6 +32,12 @@ const TopSellers = () => {
   return (
     
     <section id="section-popular" className="pb-5">
+      <div data-aos='fade-in'
+      data-aos-ease-in='ease-in-out'
+      data-aos-offset='200'
+      data-aos-duration='400'
+      data-aos-once='true'
+      data-aos-delay='50'>
       <div className="container">
         <div className="row">
           <div className="col-lg-12">
@@ -71,7 +78,7 @@ const TopSellers = () => {
                     </Link>
                   </div>
                   <div className="author_list_info">
-                    <Link to="/author">{item.authorName}</Link>
+                    <Link to={`/author/${item.authorId}`}>{item.authorName}</Link>
                     <span>{item.price} ETH</span>
                   </div>
                 </li>
@@ -79,6 +86,7 @@ const TopSellers = () => {
             </ol>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

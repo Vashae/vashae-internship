@@ -78,7 +78,7 @@ return (
                       </div>
                     </div>
                   </div>
-                  <Link to="/item-details">
+                  <Link to={`/item-details/ ${random.nftId}`}>
                     <img
                       src={random.nftImage}
                       className="lazy nft__item_preview"
@@ -87,7 +87,7 @@ return (
                   </Link>
                 </div>
                 <div className="nft__item_info">
-                  <Link to="/item-details">
+                  <Link to={`/item-details/ ${random.nftId}`}>
                     <h4>{random.title}</h4>
                   </Link>
                   <div className="nft__item_price">{random.price} ETH</div>
