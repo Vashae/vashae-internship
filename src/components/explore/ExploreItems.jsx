@@ -16,7 +16,6 @@ const [filter, setFilter] = useState("")
     setLoading(true)
     try {const {data} = await axios.get (`https://us-central1-nft-cloud-functions.cloudfunctions.net/explore${filter ? `?filter=${filter}`:""}`)
     setExplode(data)
-    console.log(data)
   } catch (error) {
     console.error('cant fetch data')(error)
   }

@@ -21,7 +21,6 @@ const Author = ({nftCollection}) => {
         const { data } = await axios.get(
           `https://us-central1-nft-cloud-functions.cloudfunctions.net/authors?author=${id}`
         );
-        console.log("Received data:", data);
         setRead(data);
       } catch (error) {
         console.error("Error fetching data:", error);
@@ -66,33 +65,33 @@ const Author = ({nftCollection}) => {
                           width={120}
                           style={{ marginBottom: "10px" }}
                         />
-                      ) : (                    
+                      ) :                    
                         
                         <img src={read?.authorImage} alt="" />
 
-                      )}
+                      }
 
                       <i className="fa fa-check"></i>
                       <div className="profile_name">
                         <h4>
                         {loading ? (
                             <Skeleton width={120} />
-                          ) : (
+                          ) : 
                           read?.authorName
-                          )}
+                          }
                           <span className="profile_username">
                           {loading ? (
                               <Skeleton width={80} />
-                            ) : (
+                            ) : 
                               read?.tag
-                            )}
+                            }
                           </span>
                           <span id="wallet" className="profile_wallet">
                           {loading ? (
                               <Skeleton width={170} />
-                            ) : (
+                            ) : 
                               read?.address
-                            )}
+                            }
                           </span>
                           <button id="btn_copy" title="Copy Text">
                             Copy
